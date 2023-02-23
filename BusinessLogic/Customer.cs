@@ -22,7 +22,5 @@ public class Customer
      
     public bool IsAvailable { get; set;}
 
-
-    
 }
 
