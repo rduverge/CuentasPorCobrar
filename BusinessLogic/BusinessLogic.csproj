@@ -4,6 +4,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>CuentasPorCobrar.BusinessLogic.Euren</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Euren Cuevas, Nestor Moscat</Authors>
+    <Company>Euren Cuevas, Nestor Moscat</Company>
+    <Product>CuentasPorCobrar.BusinessLogic</Product>
+    <Description>Project to have the business logic of an accountant project</Description>
+    <RepositoryUrl>https://github.com/Lunext/CuentasPorCobrar</RepositoryUrl>
   </PropertyGroup>
 
 
