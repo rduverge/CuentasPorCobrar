@@ -4,16 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>CuentasPorCobrarPersistence-1</PackageId>
-    <Version>1.0.0</Version>
-    <Authors>Euren Cuevas, Nestor Moscat</Authors>
-    <Company>Euren Cuevas, Nestor Moscat</Company>
-    <Product>CuentasPorCobrar.Persistence</Product>
-    <Description>This is a class lib to use a Database persistence of an Accountant project</Description>
-    <RepositoryUrl>https://github.com/Lunext/CuentasPorCobrar</RepositoryUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <FileVersion>1.0.0</FileVersion>
+   
   </PropertyGroup>
 
   <ItemGroup>
