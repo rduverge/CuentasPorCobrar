@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace CuentasPorCobrar.Shared;
 
 public partial class CuentasporcobrardbContext : DbContext
 {
-    public virtual DbSet<Document> Documents { get; set;}
+    public virtual DbSet<Document> Documents { get; set; } = null!; 
+    public virtual DbSet<Customer> Customers { get; set; } = null!; 
     public CuentasporcobrardbContext()
     {
     }
