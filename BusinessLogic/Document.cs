@@ -21,7 +21,5 @@ public class Document
 
     public bool IsAvailable { get; set;}
 
-
-
 }
 
