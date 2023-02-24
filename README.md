@@ -5,3 +5,5 @@
 
 ##  Comando para Importar los modelos dentro de Besiness Logic
 **dotnet add package CuentasPorCobrar.Persistence.Euren --version 1.0.0**
+#
+TODO: Include in the namespace Transactions model
