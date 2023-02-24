@@ -6,6 +6,7 @@ public partial class CuentasporcobrardbContext : DbContext
 {
     public virtual DbSet<Document> Documents { get; set; } = null!; 
     public virtual DbSet<Customer> Customers { get; set; } = null!; 
+    //TODO: Include in the namespace Transactions model
     public CuentasporcobrardbContext()
     {
     }
