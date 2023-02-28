@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>CuentasPorCobrar.Persistence.Euren</PackageId>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>Euren Cuevas, Nestor Moscat</Authors>
     <Company>Euren Cuevas, Nestor Moscat</Company>
     <Product>Accounting System</Product>
