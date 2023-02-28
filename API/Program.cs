@@ -54,7 +54,7 @@ builder.Services.AddSwaggerGen(doc =>
 
 });
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>(); 
-
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
 
