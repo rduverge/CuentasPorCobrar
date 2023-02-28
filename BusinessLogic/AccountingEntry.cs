@@ -8,7 +8,7 @@ public class AccountingEntry
 {
     public AccountingEntry()
     {
-        Customers=new HashSet<Customer>();
+        
     }
     [Key]
     public int AccountingEntryId { get; set; }
@@ -18,8 +18,9 @@ public class AccountingEntry
     public string Description { get; set; } = null!;
 
     [Required]
-    
-    public virtual ICollection<Customer>  Customers { get; set; } = null!;
+
+    [ForeignKey("CustomerId")]
+    public virtual Customer Customer { get; set; } = null!;
 
 
     [Required]

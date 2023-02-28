@@ -8,8 +8,7 @@ public class Transaction
 {
     public Transaction() 
     { 
-        Documents = new HashSet<Document>();
-        Customers = new HashSet<Customer>();
+       
     }
     [Key]
     public int TransactionId { get; set; }
@@ -17,7 +16,7 @@ public class Transaction
     public string MovementType { get; set; } = null!;
     [Required]
     [ForeignKey("DocumentId")]
-    public virtual ICollection<Document> Documents { get; set;} = null!;
+    public virtual Document Document { get; set;} = null!;
     [Required]
     public string DocumentNumber { get; set; } = null!;
     [Required]
@@ -25,7 +24,7 @@ public class Transaction
     public DateTime TransactionDate { get; set; }
     [Required]
     [ForeignKey("CustomerId")]
-    public virtual ICollection<Customer> Customers { get; set; } = null!;
+    public virtual Customer Customer { get; set; } = null!; 
     [Required]
     [Column(TypeName ="money")]
     public decimal Amount { get; set; }
