@@ -39,10 +39,7 @@ namespace Persistence.Migrations
                         .HasColumnType("money");
 
                     b.Property<DateTime>("AccountEntryDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -58,18 +55,16 @@ namespace Persistence.Migrations
 
                     b.HasKey("AccountingEntryId");
 
-                    b.HasIndex("CustomerId");
-
                     b.ToTable("AccountingEntries");
                 });
 
             modelBuilder.Entity("CuentasPorCobrar.Shared.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CustomerId"));
+                    b.Property<int?>("AccountingEntryId")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("CreditLimit")
                         .HasColumnType("money");
@@ -89,16 +84,15 @@ namespace Persistence.Migrations
 
                     b.HasKey("CustomerId");
 
+                    b.HasIndex("AccountingEntryId");
+
                     b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("CuentasPorCobrar.Shared.Document", b =>
                 {
                     b.Property<int>("DocumentId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DocumentId"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -118,7 +112,7 @@ namespace Persistence.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("CuentasPorCobrar.Shared.Transactions", b =>
+            modelBuilder.Entity("CuentasPorCobrar.Shared.Transaction", b =>
                 {
                     b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
@@ -129,12 +123,6 @@ namespace Persistence.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DocumentId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("DocumentNumber")
                         .IsRequired()
                         .HasColumnType("text");
@@ -144,45 +132,45 @@ namespace Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime");
 
                     b.HasKey("TransactionId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("DocumentId");
 
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("CuentasPorCobrar.Shared.AccountingEntry", b =>
+            modelBuilder.Entity("CuentasPorCobrar.Shared.Customer", b =>
                 {
-                    b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
-                        .WithMany()
+                    b.HasOne("CuentasPorCobrar.Shared.AccountingEntry", null)
+                        .WithMany("Customers")
+                        .HasForeignKey("AccountingEntryId");
+
+                    b.HasOne("CuentasPorCobrar.Shared.Transaction", null)
+                        .WithMany("Customers")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("CuentasPorCobrar.Shared.Transactions", b =>
+            modelBuilder.Entity("CuentasPorCobrar.Shared.Document", b =>
                 {
-                    b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CuentasPorCobrar.Shared.Document", "Document")
-                        .WithMany()
+                    b.HasOne("CuentasPorCobrar.Shared.Transaction", null)
+                        .WithMany("Documents")
                         .HasForeignKey("DocumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("Customer");
+            modelBuilder.Entity("CuentasPorCobrar.Shared.AccountingEntry", b =>
+                {
+                    b.Navigation("Customers");
+                });
 
-                    b.Navigation("Document");
+            modelBuilder.Entity("CuentasPorCobrar.Shared.Transaction", b =>
+                {
+                    b.Navigation("Customers");
+
+                    b.Navigation("Documents");
                 });
 #pragma warning restore 612, 618
         }
