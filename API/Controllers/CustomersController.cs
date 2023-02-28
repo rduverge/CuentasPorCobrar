@@ -23,7 +23,7 @@ public class CustomersController : ControllerBase
         return await repo.RetrieveAllAsync();
     }
 
-    //GET: api/customers[id]
+    //GET: api/customers/[id]
     [HttpGet("{id}", Name =nameof(GetCustomerByID))]
     [ProducesResponseType(200, Type = typeof(Customer))]
     [ProducesResponseType(404)]
