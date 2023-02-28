@@ -24,7 +24,7 @@ public class CustomersController : ControllerBase
     }
 
     //GET: api/customers[id]
-    [HttpGet("{id}", Name =nameof(GetCustomers))]
+    [HttpGet("{id}", Name =nameof(GetCustomerByID))]
     [ProducesResponseType(200, Type = typeof(Customer))]
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetCustomerByID(int id)
