@@ -17,10 +17,11 @@ public class AccountingEntry
     [Required]
     public string Description { get; set; } = null!;
 
-  
 
-    public int? CustomerId { get; set; }
-    public Customer? Customer { get; set; }
+
+    [ForeignKey("CustomerId")]
+    public virtual Customer? Customer { get; set; } = null!; 
+   
 
 
     [Required]
