@@ -40,7 +40,7 @@ public class AccountingEntriesController : ControllerBase
     //POST: api/accountingEntries
     //Body: AccountingEntry(JSON,XML)
     [HttpPost]
-    [ProducesResponseType(2011,Type=typeof(AccountingEntry))]
+    [ProducesResponseType(201,Type=typeof(AccountingEntry))]
     [ProducesResponseType(400)]
     public async Task<IActionResult> Create([FromBody] AccountingEntry accountingEntry)
     {
@@ -49,7 +49,7 @@ public class AccountingEntriesController : ControllerBase
         AccountingEntry? addedEntry = await repo.CreateAsync(accountingEntry);
 
         return addedEntry is null ? BadRequest("Repository failed to create accounting entry")
-            : CreatedAtRoute(routeName: nameof(GetAccountingEntries),
+            : CreatedAtRoute(routeName: nameof(GetAccountingEntry),
             routeValues: new { id = addedEntry.AccountingEntryId },
             value: addedEntry); 
     }
