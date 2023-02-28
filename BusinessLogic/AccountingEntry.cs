@@ -6,6 +6,10 @@ namespace CuentasPorCobrar.Shared;
 
 public class AccountingEntry
 {
+    public AccountingEntry()
+    {
+        Customers=new HashSet<Customer>();
+    }
     [Key]
     public int AccountingEntryId { get; set; }
 
@@ -14,8 +18,8 @@ public class AccountingEntry
     public string Description { get; set; } = null!;
 
     [Required]
-    [ForeignKey("CustomerId")]
-    public virtual Customer Customer { get; set; } = null!;
+    
+    public virtual ICollection<Customer>  Customers { get; set; } = null!;
 
 
     [Required]
