@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>CuentasPorCobrar.BusinessLogic.Euren</PackageId>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <Authors>Euren Cuevas, Nestor Moscat</Authors>
     <Company>Euren Cuevas, Nestor Moscat</Company>
     <Product>CuentasPorCobrar.BusinessLogic</Product>
