@@ -7,3 +7,5 @@
 **dotnet add package CuentasPorCobrar.Persistence.Euren --version 1.0.0**
 #
 TODO: Include in the namespace Transactions model
+
+TODO: Crear un metodo para generar un archivo a partir de la transacción
