@@ -30,13 +30,15 @@ public class AccountingEntry
     [Required]
     public string MovementType { get; set; } = null!;
 
-    [Column(TypeName="datetime")]
+    [Column(TypeName= "timestamp without time zone")]
     public DateTime AccountEntryDate { get; set; }
 
     [Column(TypeName ="money")]
     public decimal AccountEntryAmount { get; set;}
 
     public bool IsAvailable { get; set; }
+
+    
 
 }
 

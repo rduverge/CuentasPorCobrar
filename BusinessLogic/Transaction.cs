@@ -21,7 +21,7 @@ public class Transaction
     [Required]
     public string DocumentNumber { get; set; } = null!;
     [Required]
-    [Column(TypeName ="datetime")]
+    [Column(TypeName = "timestamp without time zone")]
     public DateTime TransactionDate { get; set; }
     [Required]
     [ForeignKey("CustomerId")]
