@@ -39,7 +39,7 @@ namespace Persistence.Migrations
                         .HasColumnType("money");
 
                     b.Property<DateTime>("AccountEntryDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("integer");
@@ -144,7 +144,7 @@ namespace Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("TransactionId");
 

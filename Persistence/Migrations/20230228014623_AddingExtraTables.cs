@@ -22,7 +22,7 @@ namespace Persistence.Migrations
                     CustomerId = table.Column<int>(type: "integer", nullable: false),
                     Account = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     MovementType = table.Column<string>(type: "text", nullable: false),
-                    AccountEntryDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    AccountEntryDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     AccountEntryAmount = table.Column<decimal>(type: "money", nullable: false),
                     IsAvailable = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -46,7 +46,7 @@ namespace Persistence.Migrations
                     MovementType = table.Column<string>(type: "text", nullable: false),
                     DocumentId = table.Column<int>(type: "integer", nullable: false),
                     DocumentNumber = table.Column<string>(type: "text", nullable: false),
-                    TransactionDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    TransactionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     CustomerId = table.Column<int>(type: "integer", nullable: false),
                     Amount = table.Column<decimal>(type: "money", nullable: false)
                 },
