@@ -11,7 +11,7 @@ public class Transactions
     public string TransactionsType { get; set; } = null!;
     [Required]
     [ForeignKey("DocumentId")]
-    public virtual Document DocumentId { get; set;} = null!;
+    public virtual Document Document { get; set;} = null!;
     [Required]
     public string DocumentNumber { get; set; } = null!;
     [Required]
@@ -19,7 +19,7 @@ public class Transactions
     public DateTime TransactionDate { get; set; }
     [Required]
     [ForeignKey("CustomerId")]
-    public virtual Customer CustomerId { get; set; } = null!;
+    public virtual Customer Customer { get; set; } = null!;
     [Required]
     [Column(TypeName ="money")]
     public decimal Amount { get; set; }
