@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CuentasPorCobrar.BusinessLogic.Euren" Version="1.1.5" />
-    <PackageReference Include="CuentasPorCobrar.Persistence.Euren" Version="1.1.3" />
+    <PackageReference Include="CuentasPorCobrar.BusinessLogic.Euren" Version="1.1.6" />
+    <PackageReference Include="CuentasPorCobrar.Persistence.Euren" Version="1.1.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
