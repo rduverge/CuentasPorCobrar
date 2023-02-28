@@ -6,9 +6,9 @@ namespace CuentasPorCobrar.Shared;
 public class Transactions 
 {
     [Key]
-    public int TransactionsId { get; set; }
+    public int TransactionId { get; set; }
     [Required]
-    public string TransactionsType { get; set; } = null!;
+    public string MovementType { get; set; } = null!;
     [Required]
     [ForeignKey("DocumentId")]
     public virtual Document Document { get; set;} = null!;
