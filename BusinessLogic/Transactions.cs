@@ -4,11 +4,12 @@ using System.Reflection.Metadata;
 
 namespace CuentasPorCobrar.Shared;
 
-public class Transactions 
+public class Transaction 
 {
-    public Transactions() 
+    public Transaction() 
     { 
         Documents = new HashSet<Document>();
+        Customers = new HashSet<Customer>();
     }
     [Key]
     public int TransactionId { get; set; }
@@ -24,7 +25,7 @@ public class Transactions
     public DateTime TransactionDate { get; set; }
     [Required]
     [ForeignKey("CustomerId")]
-    public virtual Customer Customer { get; set; } = null!;
+    public virtual ICollection<Customer> Customers { get; set; } = null!;
     [Required]
     [Column(TypeName ="money")]
     public decimal Amount { get; set; }
