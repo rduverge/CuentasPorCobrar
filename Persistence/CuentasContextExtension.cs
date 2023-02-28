@@ -25,7 +25,10 @@ public static class CuentasContextExtension
     public static IServiceCollection AddCuentasContext(this IServiceCollection services,
         string connectionString= "Host=localhost;Port=5432;Database=cuentasporcobrardb;Username=postgres;Password=Euren002")
     {
-        services.AddDbContext<CuentasporcobrardbContext>(options => options.UseNpgsql(connectionString));
+        services.AddDbContext<CuentasporcobrardbContext>(options => {
+            options.UseNpgsql(connectionString);
+            options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
         return services; 
     }
 }
