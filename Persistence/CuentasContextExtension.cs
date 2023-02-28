@@ -27,7 +27,7 @@ public static class CuentasContextExtension
     {
         services.AddDbContext<CuentasporcobrardbContext>(options => {
             options.UseNpgsql(connectionString);
-            options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+          //  options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
         return services; 
     }
