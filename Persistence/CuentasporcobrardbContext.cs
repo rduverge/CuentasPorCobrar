@@ -6,6 +6,9 @@ public partial class CuentasporcobrardbContext : DbContext
 {
     public virtual DbSet<Document> Documents { get; set; } = null!; 
     public virtual DbSet<Customer> Customers { get; set; } = null!; 
+    public virtual DbSet<Transactions> Transactions { get; set; } = null!;  
+    public virtual DbSet<AccountingEntry> AccountingEntries { get; set; } = null!;  
+
     public CuentasporcobrardbContext()
     {
     }

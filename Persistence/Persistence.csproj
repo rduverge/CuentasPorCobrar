@@ -16,8 +16,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CuentasPorCobrar.BusinessLogic.Euren" Version="1.0.0" />
+    <PackageReference Include="CuentasPorCobrar.BusinessLogic.Euren" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
