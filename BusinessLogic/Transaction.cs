@@ -15,7 +15,7 @@ public class Transaction
     [Required]
     public string MovementType { get; set; } = null!;
    
-    [ForeignKey("DocumentId")]
+    
     public int? DocumentId { get; set; }    
     public Document? Document { get; set; }
     
