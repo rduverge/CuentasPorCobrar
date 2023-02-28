@@ -46,8 +46,12 @@ public class AccountingEntriesController : ControllerBase
     {
         if (accountingEntry is null) return BadRequest();
 
+       
+    
+
         AccountingEntry? addedEntry = await repo.CreateAsync(accountingEntry);
 
+       
         return addedEntry is null ? BadRequest("Repository failed to create accounting entry")
             : CreatedAtRoute(routeName: nameof(GetAccountingEntry),
             routeValues: new { id = addedEntry.AccountingEntryId },

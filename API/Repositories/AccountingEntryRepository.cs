@@ -1,4 +1,5 @@
 ﻿using CuentasPorCobrar.Shared;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Concurrent;
 
@@ -42,11 +43,32 @@ public class AccountingEntryRepository : IAccountingEntryRepository
             : accountingCache.Values); 
     }
 
-    public Task<AccountingEntry?> RetrieveAsync(int id)
+    public  Task<AccountingEntry?> RetrieveAsync(int id)
     {
+
+
+        //if (accountingCache is not null && accountingCache.TryGetValue(id, out AccountingEntry? cachedEntry))
+        //{
+        //    return cachedEntry;
+        //}
+
+        //AccountingEntry? dbEntry = await db.AccountingEntries
+        //    .Include(a => a.Customer)
+        //    .FirstOrDefaultAsync(a => a.AccountingEntryId == id);
+
+        //if (dbEntry is not null && accountingCache is not null)
+        //{
+        //    accountingCache.TryAdd(dbEntry.AccountingEntryId, dbEntry);
+        //}
+
+        //return dbEntry;
+
         //for performance get from cache 
 
+
+
         if (accountingCache is null) return null!;
+
 
         accountingCache.TryGetValue(id, out AccountingEntry? accountingEntry);
         return Task.FromResult(accountingEntry); 
@@ -57,6 +79,9 @@ public class AccountingEntryRepository : IAccountingEntryRepository
     {
         //Add to database using EF Core
         EntityEntry<AccountingEntry> added = await db.AccountingEntries.AddAsync(accountingEntry);
+
+
+      
         int affected = await db.SaveChangesAsync();
 
         if (affected==1)
