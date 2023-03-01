@@ -10,5 +10,5 @@ TODO: Include in the namespace Transactions model
 #
 TODO: Crear un metodo para generar un archivo a partir de la transacción
 
-#Estado
+# Estado
 Registrado || Aprobado
