@@ -30,8 +30,8 @@ public class Customer
     public string State { get; set; } = null!; 
 
     public virtual ICollection<AccountingEntry> AccountingEntries{get; set;} 
-
     public virtual ICollection<Transaction> Transactions { get; set; }
+
 
 
 }
