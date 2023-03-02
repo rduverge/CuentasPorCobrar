@@ -23,7 +23,7 @@ public class CustomersController : ControllerBase
         return await repo.RetrieveAllAsync();
     }
 
-    //GET: api/customers[id]
+    //GET: api/customers/[id]
     [HttpGet("{id}", Name =nameof(GetCustomerByID))]
     [ProducesResponseType(200, Type = typeof(Customer))]
     [ProducesResponseType(404)]
@@ -68,7 +68,7 @@ public class CustomersController : ControllerBase
     }
 
     //DELETE: api/customers/[id]
-    [HttpDelete("id")]
+    [HttpDelete("{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
