@@ -15,19 +15,19 @@ public class Customer
     [Key]
     public int CustomerId { get; set; }
 
-    [Required]
+    
     [MaxLength(32)]
-    public string Name { get; set; } = null!;
+    public string? Name { get; set; }
 
-    [Required]
+    
     [MaxLength(13)]
-    public string Identification { get; set; } = null!;
+    public string? Identification { get; set; }
 
 
     [Column(TypeName = "money")]
     public decimal CreditLimit { get; set; }
 
-    public string State { get; set; } = null!; 
+    public string? State { get; set; }  
 
     public virtual ICollection<AccountingEntry> AccountingEntries{get; set;} 
     public virtual ICollection<Transaction> Transactions { get; set; }

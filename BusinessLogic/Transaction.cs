@@ -6,31 +6,29 @@ namespace CuentasPorCobrar.Shared;
 
 public class Transaction 
 {
-    public Transaction() 
-    { 
-       
-    }
+   
     [Key]
     public int TransactionId { get; set; }
-    [Required]
-    public string MovementType { get; set; } = null!;
+    
+    public string? MovementType { get; set; }
 
-    [ForeignKey("DocumentId")]
-    public virtual Document? Document { get; set; } = null!; 
+    public int DocumentId { get; set; }
+    public virtual Document? Document { get; set; } 
     
     
-    [Required]
-    public string DocumentNumber { get; set; } = null!;
-    [Required]
+    
+    public string? DocumentNumber { get; set; }
+    
     [Column(TypeName = "timestamp without time zone")]
     public DateTime TransactionDate { get; set; }
 
 
 
-    [ForeignKey("CustomerId")]
-    public virtual Customer? Customer { get; set; } = null!;
+    
+    public int CustomerId { get; set; }
+    public virtual Customer? Customer { get; set; }
 
-    [Required]
+   
     [Column(TypeName ="money")]
     public decimal Amount { get; set; }
 }

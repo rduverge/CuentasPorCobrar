@@ -13,14 +13,14 @@ public class Document
     public int DocumentId { get; set; }
 
 
-    [Required]
+   
     [MaxLength(50)]
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
 
 
-    [Required]
+    
     [MaxLength(40)]
-    public string LedgerAccount { get; set; } = null!;
+    public string? LedgerAccount { get; set; }
 
 
     public string State { get; set;}
