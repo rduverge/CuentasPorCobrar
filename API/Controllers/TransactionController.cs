@@ -69,7 +69,7 @@ public class TransactionController : ControllerBase
     }
 
     //DELETE: api/transactions/[id]
-    [HttpDelete("id")]
+    [HttpDelete("{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
