@@ -1,5 +1,6 @@
 ﻿namespace CuentasPorCobrar.Shared;
 
+using BusinessLogic.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,16 +15,18 @@ public class Document
 
 
    
-    [MaxLength(50)]
+  
     public string? Description { get; set; }
 
 
     
-    [MaxLength(40)]
+   
     public string? LedgerAccount { get; set; }
 
 
-    public string State { get; set;}
+    public States? State { get; set; }
+
+
 
     public virtual ICollection<Transaction> Transactions { get; set; }
 

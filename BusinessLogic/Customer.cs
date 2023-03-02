@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BusinessLogic.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema; 
 
 namespace CuentasPorCobrar.Shared;
@@ -16,18 +17,18 @@ public class Customer
     public int CustomerId { get; set; }
 
     
-    [MaxLength(32)]
+   
     public string? Name { get; set; }
 
     
-    [MaxLength(13)]
+  
     public string? Identification { get; set; }
 
 
     [Column(TypeName = "money")]
     public decimal CreditLimit { get; set; }
 
-    public string? State { get; set; }  
+    public States? State { get; set; }  
 
     public virtual ICollection<AccountingEntry> AccountingEntries{get; set;} 
     public virtual ICollection<Transaction> Transactions { get; set; }

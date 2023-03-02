@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BusinessLogic.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata;
 
@@ -10,7 +11,7 @@ public class Transaction
     [Key]
     public int TransactionId { get; set; }
     
-    public string? MovementType { get; set; }
+    public MovementTypes? MovementType { get; set; }
 
     public int DocumentId { get; set; }
     public virtual Document? Document { get; set; } 
