@@ -5,6 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class Document
 {
+    public Document()
+    {
+        Transactions=new HashSet<Transaction>();
+    }
     [Key]
     public int DocumentId { get; set; }
 
@@ -19,7 +23,9 @@ public class Document
     public string LedgerAccount { get; set; } = null!;
 
 
-    public bool IsAvailable { get; set;}
+    public string State { get; set;}
+
+    public virtual ICollection<Transaction> Transactions { get; set; }
 
 }
 

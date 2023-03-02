@@ -1,10 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema; 
 
-namespace CuentasPorCobrar.Shared; 
+namespace CuentasPorCobrar.Shared;
 
 public class Customer
 {
+    public Customer()
+    {
+
+        AccountingEntries=new HashSet<AccountingEntry>();
+        Transactions=new HashSet<Transaction>(); 
+
+    }
     [Key]
     public int CustomerId { get; set; }
 
@@ -17,10 +24,15 @@ public class Customer
     public string Identification { get; set; } = null!;
 
 
-    [Column(TypeName ="money")]
-    public decimal CreditLimit { get; set;}
-     
-    public bool IsAvailable { get; set;}
+    [Column(TypeName = "money")]
+    public decimal CreditLimit { get; set; }
+
+    public string State { get; set; } = null!; 
+
+    public virtual ICollection<AccountingEntry> AccountingEntries{get; set;} 
+
+    public virtual ICollection<Transaction> Transactions { get; set; }
+
 
 }
 

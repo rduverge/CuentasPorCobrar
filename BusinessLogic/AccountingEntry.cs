@@ -6,10 +6,8 @@ namespace CuentasPorCobrar.Shared;
 
 public class AccountingEntry
 {
-    public AccountingEntry()
-    {
-        
-    }
+     
+    
     [Key]
     public int AccountingEntryId { get; set; }
 
@@ -18,10 +16,13 @@ public class AccountingEntry
     public string Description { get; set; } = null!;
 
 
+     
+    //[ForeignKey("CustomerId")]
+    //public virtual Customer? Customer { get; set; } = null!; 
 
-    [ForeignKey("CustomerId")]
-    public virtual Customer? Customer { get; set; } = null!; 
-   
+
+    public int CustomerId { get; set;}
+    public virtual Customer Customer { get; set; } = null!;
 
 
     [Required]
@@ -38,7 +39,7 @@ public class AccountingEntry
     [Column(TypeName ="money")]
     public decimal AccountEntryAmount { get; set;}
 
-    public bool IsAvailable { get; set; }
+    public string State { get; set; } = null!; 
 
     
 
