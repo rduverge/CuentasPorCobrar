@@ -41,7 +41,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("AccountEntryDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Description")
@@ -49,10 +49,11 @@ namespace Persistence.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("character varying(60)");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("MovementType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -79,13 +80,14 @@ namespace Persistence.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("character varying(13)");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("CustomerId");
 
@@ -105,13 +107,14 @@ namespace Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("LedgerAccount")
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("DocumentId");
 
@@ -158,8 +161,10 @@ namespace Persistence.Migrations
             modelBuilder.Entity("CuentasPorCobrar.Shared.AccountingEntry", b =>
                 {
                     b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
+                        .WithMany("AccountingEntries")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
                 });
@@ -167,16 +172,28 @@ namespace Persistence.Migrations
             modelBuilder.Entity("CuentasPorCobrar.Shared.Transaction", b =>
                 {
                     b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("CustomerId");
 
                     b.HasOne("CuentasPorCobrar.Shared.Document", "Document")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("DocumentId");
 
                     b.Navigation("Customer");
 
                     b.Navigation("Document");
+                });
+
+            modelBuilder.Entity("CuentasPorCobrar.Shared.Customer", b =>
+                {
+                    b.Navigation("AccountingEntries");
+
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("CuentasPorCobrar.Shared.Document", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

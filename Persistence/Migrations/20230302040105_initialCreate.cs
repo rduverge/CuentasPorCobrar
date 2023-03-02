@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,7 @@ namespace Persistence.Migrations
                     Name = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     Identification = table.Column<string>(type: "character varying(13)", maxLength: 13, nullable: false),
                     CreditLimit = table.Column<decimal>(type: "money", nullable: false),
-                    IsAvailable = table.Column<bool>(type: "boolean", nullable: false)
+                    State = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,7 +36,7 @@ namespace Persistence.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Description = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     LedgerAccount = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    IsAvailable = table.Column<bool>(type: "boolean", nullable: false)
+                    State = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,12 +50,12 @@ namespace Persistence.Migrations
                     AccountingEntryId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Description = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
-                    CustomerId = table.Column<int>(type: "integer", nullable: true),
+                    CustomerId = table.Column<int>(type: "integer", nullable: false),
                     Account = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     MovementType = table.Column<string>(type: "text", nullable: false),
                     AccountEntryDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     AccountEntryAmount = table.Column<decimal>(type: "money", nullable: false),
-                    IsAvailable = table.Column<bool>(type: "boolean", nullable: false)
+                    State = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,7 +64,8 @@ namespace Persistence.Migrations
                         name: "FK_AccountingEntries_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "CustomerId");
+                        principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
