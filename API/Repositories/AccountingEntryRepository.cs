@@ -47,24 +47,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
     {
 
 
-        //if (accountingCache is not null && accountingCache.TryGetValue(id, out AccountingEntry? cachedEntry))
-        //{
-        //    return cachedEntry;
-        //}
-
-        //AccountingEntry? dbEntry = await db.AccountingEntries
-        //    .Include(a => a.Customer)
-        //    .FirstOrDefaultAsync(a => a.AccountingEntryId == id);
-
-        //if (dbEntry is not null && accountingCache is not null)
-        //{
-        //    accountingCache.TryAdd(dbEntry.AccountingEntryId, dbEntry);
-        //}
-
-        //return dbEntry;
-
-        //for performance get from cache 
-
+    
 
 
         if (accountingCache is null) return null!;

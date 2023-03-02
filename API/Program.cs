@@ -56,6 +56,7 @@ builder.Services.AddSwaggerGen(doc =>
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>(); 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IAccountingEntryRepository, AccountingEntryRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>(); 
 
 var app = builder.Build();
 

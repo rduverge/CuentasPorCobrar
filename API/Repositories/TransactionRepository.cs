@@ -31,7 +31,7 @@ public class TransactionRepository : ITransactionRepository
         return Task.FromResult(transaction);
     }
 
-    public Transaction UpdateCache(int id, Transaction transaction)
+    private Transaction UpdateCache(int id, Transaction transaction)
     {
         Transaction? old; 
         if(transactionCache is not null)
