@@ -13,3 +13,6 @@ TODO: Crear un metodo para generar un archivo a partir de la transacción
 # Estado
 
 Registrado || Aprobado
+
+#
+Preguntar sobre Cuenta Contable
