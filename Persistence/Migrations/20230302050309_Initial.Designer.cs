@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CuentasporcobrardbContext))]
-    [Migration("20230302040105_initialCreate")]
-    partial class initialCreate
+    [Migration("20230302050309_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,6 @@ namespace Persistence.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AccountingEntryId"));
 
                     b.Property<string>("Account")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
@@ -48,16 +47,13 @@ namespace Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("character varying(60)");
 
                     b.Property<string>("MovementType")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("State")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("AccountingEntryId");
@@ -79,17 +75,14 @@ namespace Persistence.Migrations
                         .HasColumnType("money");
 
                     b.Property<string>("Identification")
-                        .IsRequired()
                         .HasMaxLength(13)
                         .HasColumnType("character varying(13)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
 
                     b.Property<string>("State")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("CustomerId");
@@ -106,12 +99,10 @@ namespace Persistence.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DocumentId"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("LedgerAccount")
-                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
@@ -135,18 +126,16 @@ namespace Persistence.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("DocumentId")
+                    b.Property<int>("DocumentId")
                         .HasColumnType("integer");
 
                     b.Property<string>("DocumentNumber")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("MovementType")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("TransactionDate")
@@ -176,11 +165,15 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
                         .WithMany("Transactions")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CuentasPorCobrar.Shared.Document", "Document")
                         .WithMany("Transactions")
-                        .HasForeignKey("DocumentId");
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 

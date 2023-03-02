@@ -24,7 +24,23 @@ public partial class CuentasporcobrardbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        modelBuilder.Entity<Transaction>()
+            .HasOne(c => c.Customer)
+            .WithMany(t => t.Transactions);
+
+        modelBuilder.Entity<Transaction>()
+            .HasOne(d => d.Document)
+            .WithMany(t => t.Transactions);
+
+
+
+        modelBuilder.Entity<AccountingEntry>()
+            .HasOne(c => c.Customer)
+            .WithMany(a => a.AccountingEntries); 
+       
         OnModelCreatingPartial(modelBuilder);
+
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
