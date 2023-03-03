@@ -5,6 +5,8 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using API.Repositories;
 using Microsoft.EntityFrameworkCore;
+using BusinessLogic.Validation;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +58,11 @@ builder.Services.AddSwaggerGen(doc =>
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>(); 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IAccountingEntryRepository, AccountingEntryRepository>();
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>(); 
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+builder.Services.AddScoped<IValidator<Customer>, CustomerValidator>();
+builder.Services.AddScoped<IValidator<Transaction>, TransactionValidator>();
+
 
 var app = builder.Build();
 

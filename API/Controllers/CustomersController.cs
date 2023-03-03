@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CuentasPorCobrar.Shared;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace API.Controllers;
 
@@ -10,11 +12,14 @@ namespace API.Controllers;
 public class CustomersController : ControllerBase
 {
     private readonly ICustomerRepository repo;
+    private readonly IValidator<Customer> _validator;
 
-    public CustomersController(ICustomerRepository repo)
+    public CustomersController(ICustomerRepository repo, IValidator<Customer> _validator)
     {
         this.repo = repo;
+        this._validator = _validator;
     }
+
 
     [HttpGet]
     [ProducesResponseType(200, Type=typeof(IEnumerable<Customer>))]
@@ -22,6 +27,7 @@ public class CustomersController : ControllerBase
     {
         return await repo.RetrieveAllAsync();
     }
+
 
     //GET: api/customers/[id]
     [HttpGet("{id}", Name =nameof(GetCustomerByID))]
@@ -34,6 +40,7 @@ public class CustomersController : ControllerBase
         return customer is null ? NotFound() : Ok(customer);
     }
 
+
     //Create a new customer
     //POST: api/customers
     [HttpPost]
@@ -41,7 +48,14 @@ public class CustomersController : ControllerBase
     [ProducesResponseType(400)]
     public async Task<IActionResult> Create([FromBody] Customer customer)
     {
-        if (customer is null) return BadRequest();
+        ValidationResult res = await _validator.ValidateAsync(customer);
+        //if (customer is null) return BadRequest();
+
+        if (!res.IsValid)
+        {
+            return BadRequest(res.Errors);
+        }
+
 
         Customer? addedCustomer = await repo.CreateAsync(customer);
 
@@ -49,7 +63,10 @@ public class CustomersController : ControllerBase
             : CreatedAtRoute(routeName:nameof(GetCustomerByID),
             routeValues: new {id = addedCustomer.CustomerId},
             value: addedCustomer);
+
     }
+
+
     //PUT: api/customers/[id]
     [HttpPut("{id}")]
     [ProducesResponseType(204)]
