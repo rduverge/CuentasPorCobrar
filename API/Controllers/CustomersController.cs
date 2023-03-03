@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using CuentasPorCobrar.Shared;
 using FluentValidation;
 using FluentValidation.Results;
+using API.Middleware;
 
 namespace API.Controllers;
 
@@ -48,12 +49,14 @@ public class CustomersController : ControllerBase
     [ProducesResponseType(400)]
     public async Task<IActionResult> Create([FromBody] Customer customer)
     {
-        ValidationResult res = await _validator.ValidateAsync(customer);
+        ValidationResult result = await _validator.ValidateAsync(customer);
         //if (customer is null) return BadRequest();
 
-        if (!res.IsValid)
+        if(customer is null) return BadRequest(); 
+        if (!result.IsValid)
         {
-            return BadRequest(res.Errors);
+            result.AddToModelState(ModelState);
+            return BadRequest(ModelState);
         }
 
 
@@ -74,7 +77,15 @@ public class CustomersController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, [FromBody] Customer customer)
     {
+        ValidationResult result = await _validator.ValidateAsync(customer);
+
         if(customer is null || customer.CustomerId != id) return BadRequest();
+
+        if(!result.IsValid)
+        {
+            result.AddToModelState(ModelState);
+            return BadRequest(ModelState);
+        }
 
         Customer? existing = await repo.RetrieveByIdAsync(id);
 
