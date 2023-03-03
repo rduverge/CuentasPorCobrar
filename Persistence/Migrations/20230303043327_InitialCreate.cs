@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,10 +18,10 @@ namespace Persistence.Migrations
                 {
                     CustomerId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
-                    Identification = table.Column<string>(type: "character varying(13)", maxLength: 13, nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Identification = table.Column<string>(type: "text", nullable: true),
                     CreditLimit = table.Column<decimal>(type: "money", nullable: false),
-                    State = table.Column<string>(type: "text", nullable: true)
+                    State = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -34,9 +34,9 @@ namespace Persistence.Migrations
                 {
                     DocumentId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Description = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
-                    LedgerAccount = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
-                    State = table.Column<string>(type: "text", nullable: false)
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    LedgerAccount = table.Column<int>(type: "integer", nullable: false),
+                    State = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,13 +49,13 @@ namespace Persistence.Migrations
                 {
                     AccountingEntryId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Description = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
                     CustomerId = table.Column<int>(type: "integer", nullable: false),
-                    Account = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
-                    MovementType = table.Column<string>(type: "text", nullable: true),
+                    Account = table.Column<int>(type: "integer", nullable: false),
+                    MovementType = table.Column<int>(type: "integer", nullable: true),
                     AccountEntryDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     AccountEntryAmount = table.Column<decimal>(type: "money", nullable: false),
-                    State = table.Column<string>(type: "text", nullable: true)
+                    State = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,7 +74,7 @@ namespace Persistence.Migrations
                 {
                     TransactionId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    MovementType = table.Column<string>(type: "text", nullable: true),
+                    MovementType = table.Column<int>(type: "integer", nullable: true),
                     DocumentId = table.Column<int>(type: "integer", nullable: false),
                     DocumentNumber = table.Column<string>(type: "text", nullable: true),
                     TransactionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CuentasporcobrardbContext))]
-    [Migration("20230302050309_Initial")]
-    partial class Initial
+    [Migration("20230303043327_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,8 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AccountingEntryId"));
 
-                    b.Property<string>("Account")
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)");
+                    b.Property<int>("Account")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("AccountEntryAmount")
                         .HasColumnType("money");
@@ -47,14 +46,13 @@ namespace Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(60)
-                        .HasColumnType("character varying(60)");
-
-                    b.Property<string>("MovementType")
                         .HasColumnType("text");
 
-                    b.Property<string>("State")
-                        .HasColumnType("text");
+                    b.Property<int?>("MovementType")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("State")
+                        .HasColumnType("integer");
 
                     b.HasKey("AccountingEntryId");
 
@@ -75,15 +73,13 @@ namespace Persistence.Migrations
                         .HasColumnType("money");
 
                     b.Property<string>("Identification")
-                        .HasMaxLength(13)
-                        .HasColumnType("character varying(13)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)");
-
-                    b.Property<string>("State")
                         .HasColumnType("text");
+
+                    b.Property<int?>("State")
+                        .HasColumnType("integer");
 
                     b.HasKey("CustomerId");
 
@@ -99,16 +95,13 @@ namespace Persistence.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DocumentId"));
 
                     b.Property<string>("Description")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("LedgerAccount")
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)");
-
-                    b.Property<string>("State")
-                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("LedgerAccount")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("State")
+                        .HasColumnType("integer");
 
                     b.HasKey("DocumentId");
 
@@ -135,8 +128,8 @@ namespace Persistence.Migrations
                     b.Property<string>("DocumentNumber")
                         .HasColumnType("text");
 
-                    b.Property<string>("MovementType")
-                        .HasColumnType("text");
+                    b.Property<int?>("MovementType")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("timestamp without time zone");
