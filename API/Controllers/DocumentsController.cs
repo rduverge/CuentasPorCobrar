@@ -82,18 +82,9 @@ public class DocumentsController : ControllerBase
     public async Task<IActionResult> Update(int id, [FromBody] Document document)
     {
 
-
-
-        
-
-
-
-
         ValidationResult vadResult = await validator.ValidateAsync(document);
 
-
         if (document is null||document.DocumentId !=id) return BadRequest();
-
 
         if (!vadResult.IsValid)
         {
@@ -101,8 +92,6 @@ public class DocumentsController : ControllerBase
             return BadRequest(ModelState);
         }
         
-
-
         Document? existing = await repo.RetrieveAsync(id);
 
         if (existing is null) return NotFound();

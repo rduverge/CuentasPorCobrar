@@ -1,5 +1,8 @@
-﻿using API.Repositories;
+﻿using API.Middleware;
+using API.Repositories;
 using CuentasPorCobrar.Shared;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +13,12 @@ namespace API.Controllers;
 public class TransactionController : ControllerBase
 {
     private readonly ITransactionRepository repo; 
+    private readonly IValidator<Transaction> validator; 
     
-    public TransactionController(ITransactionRepository repo)
+    public TransactionController(ITransactionRepository repo, IValidator<Transaction> validator)
     {
         this.repo = repo;
+        this.validator = validator;
     }
 
     [HttpGet]
@@ -40,7 +45,14 @@ public class TransactionController : ControllerBase
     [ProducesResponseType(400)]
     public async Task<IActionResult> Create([FromBody] Transaction transaction)
     {
+        ValidationResult result = await validator.ValidateAsync(transaction);
+        
         if (transaction is null) return BadRequest();
+        if (!result.IsValid)
+        {
+            result.AddToModelState(ModelState);
+            return BadRequest(ModelState);
+        }
 
         Transaction? addedTransaction = await repo.CreateAsync(transaction);
 
@@ -58,7 +70,15 @@ public class TransactionController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, [FromBody] Transaction transaction)
     {
+        ValidationResult result = await validator.ValidateAsync(transaction);
+        
         if(transaction is null || transaction.TransactionId != id) return BadRequest();
+
+        if(!result.IsValid)
+        {
+            result.AddToModelState(ModelState);
+            return BadRequest(ModelState);
+        }
 
         Transaction? existing = await repo.RetrieveByIdAsync(id);
 

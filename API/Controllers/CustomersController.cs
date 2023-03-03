@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CuentasPorCobrar.Shared;
+using FluentValidation;
+using FluentValidation.Results;
+using API.Middleware;
 
 namespace API.Controllers;
 
@@ -10,11 +13,14 @@ namespace API.Controllers;
 public class CustomersController : ControllerBase
 {
     private readonly ICustomerRepository repo;
+    private readonly IValidator<Customer> _validator;
 
-    public CustomersController(ICustomerRepository repo)
+    public CustomersController(ICustomerRepository repo, IValidator<Customer> _validator)
     {
         this.repo = repo;
+        this._validator = _validator;
     }
+
 
     [HttpGet]
     [ProducesResponseType(200, Type=typeof(IEnumerable<Customer>))]
@@ -22,6 +28,7 @@ public class CustomersController : ControllerBase
     {
         return await repo.RetrieveAllAsync();
     }
+
 
     //GET: api/customers/[id]
     [HttpGet("{id}", Name =nameof(GetCustomerByID))]
@@ -34,6 +41,7 @@ public class CustomersController : ControllerBase
         return customer is null ? NotFound() : Ok(customer);
     }
 
+
     //Create a new customer
     //POST: api/customers
     [HttpPost]
@@ -41,7 +49,16 @@ public class CustomersController : ControllerBase
     [ProducesResponseType(400)]
     public async Task<IActionResult> Create([FromBody] Customer customer)
     {
-        if (customer is null) return BadRequest();
+        ValidationResult result = await _validator.ValidateAsync(customer);
+        //if (customer is null) return BadRequest();
+
+        if(customer is null) return BadRequest(); 
+        if (!result.IsValid)
+        {
+            result.AddToModelState(ModelState);
+            return BadRequest(ModelState);
+        }
+
 
         Customer? addedCustomer = await repo.CreateAsync(customer);
 
@@ -49,7 +66,10 @@ public class CustomersController : ControllerBase
             : CreatedAtRoute(routeName:nameof(GetCustomerByID),
             routeValues: new {id = addedCustomer.CustomerId},
             value: addedCustomer);
+
     }
+
+
     //PUT: api/customers/[id]
     [HttpPut("{id}")]
     [ProducesResponseType(204)]
@@ -57,7 +77,15 @@ public class CustomersController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, [FromBody] Customer customer)
     {
+        ValidationResult result = await _validator.ValidateAsync(customer);
+
         if(customer is null || customer.CustomerId != id) return BadRequest();
+
+        if(!result.IsValid)
+        {
+            result.AddToModelState(ModelState);
+            return BadRequest(ModelState);
+        }
 
         Customer? existing = await repo.RetrieveByIdAsync(id);
 
