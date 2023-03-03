@@ -66,6 +66,7 @@ builder.Services.AddScoped<IAccountingEntryRepository, AccountingEntryRepository
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 builder.Services.AddScoped<IValidator<Document>, DocumentValidator>();
+builder.Services.AddScoped<IValidator<AccountingEntry>, AccountingEntriesValidator>();
 
 //builder.Services.AddScoped<ValidationFilterAttribute>();
 

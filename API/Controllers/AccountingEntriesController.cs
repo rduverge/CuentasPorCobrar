@@ -2,6 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using CuentasPorCobrar.Shared;
 using API.Repositories;
+using FluentValidation.Results;
+using FluentValidation;
+using API.Middleware;
+
 namespace API.Controllers;
 
 [Route("api/[controller]")]
@@ -9,13 +13,16 @@ namespace API.Controllers;
 public class AccountingEntriesController : ControllerBase
 {
     private readonly IAccountingEntryRepository repo;
+    private readonly IValidator<AccountingEntry> validator;
 
 
     //constructor injects repository registered in Program 
 
-    public AccountingEntriesController(IAccountingEntryRepository repo)
+    public AccountingEntriesController(IAccountingEntryRepository repo, 
+        IValidator<AccountingEntry> validator)
     {
         this.repo=repo;
+        this.validator=validator; 
     }
 
 
@@ -44,9 +51,19 @@ public class AccountingEntriesController : ControllerBase
     [ProducesResponseType(400)]
     public async Task<IActionResult> Create([FromBody] AccountingEntry accountingEntry)
     {
+        ValidationResult vadResult = await validator.ValidateAsync(accountingEntry); 
+
+
         if (accountingEntry is null) return BadRequest();
 
-       
+
+        if (!vadResult.IsValid)
+        {
+            vadResult.AddToModelState(ModelState);
+
+            return BadRequest(ModelState);
+        }
+
     
 
         AccountingEntry? addedEntry = await repo.CreateAsync(accountingEntry);
@@ -67,6 +84,13 @@ public class AccountingEntriesController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, [FromBody] AccountingEntry accountingEntry)
     {
+        ValidationResult vadResult = await validator.ValidateAsync(accountingEntry);
+
+        if (!vadResult.IsValid)
+        {
+            vadResult.AddToModelState(ModelState);
+            return BadRequest(ModelState); 
+        }
         if (accountingEntry is null || accountingEntry.AccountingEntryId!=id) return BadRequest();
 
         AccountingEntry? existing = await repo.RetrieveAsync(id);

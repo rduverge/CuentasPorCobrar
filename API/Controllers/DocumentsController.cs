@@ -70,6 +70,7 @@ public class DocumentsController : ControllerBase
             : CreatedAtRoute(routeName: nameof(GetDocument),
             routeValues: new { id = addedDocument.DocumentId },
             value: addedDocument);
+
     }
 
     //PUT: api/documents/[id]
@@ -100,11 +101,6 @@ public class DocumentsController : ControllerBase
             return BadRequest(ModelState);
         }
         
-        
-        
-
-
-
 
 
         Document? existing = await repo.RetrieveAsync(id);
