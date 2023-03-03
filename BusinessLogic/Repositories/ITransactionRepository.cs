@@ -1,11 +1,8 @@
-﻿using CuentasPorCobrar.Shared;
-using System.Transactions;
-
+﻿
 //Used to difference CuentasPorCobrar.Transaction from the
 //reserved word Transaction
-using Transaction = CuentasPorCobrar.Shared.Transaction;
 
-namespace API.Repositories;
+namespace CuentasPorCobrar.Shared;
 
 public interface ITransactionRepository
 {

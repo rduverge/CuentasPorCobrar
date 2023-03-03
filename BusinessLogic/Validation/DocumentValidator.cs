@@ -2,7 +2,7 @@
 using CuentasPorCobrar.Shared;
 using FluentValidation;
 
-namespace BusinessLogic.Validation;
+namespace CuentasPorCobrar.Shared;
 public class DocumentValidator: AbstractValidator<Document>
 {
 

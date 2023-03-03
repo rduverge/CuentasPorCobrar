@@ -1,8 +1,8 @@
-﻿using CuentasPorCobrar.Shared;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Concurrent;
 
-namespace API.Repositories; 
+namespace CuentasPorCobrar.Shared;
+
 public class CustomerRepository : ICustomerRepository
 {
     private static ConcurrentDictionary<int, Customer>? customerCache;

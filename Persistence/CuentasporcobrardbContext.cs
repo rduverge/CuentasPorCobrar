@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 
 namespace CuentasPorCobrar.Shared;
 
@@ -8,7 +9,6 @@ public partial class CuentasporcobrardbContext : DbContext
     public virtual DbSet<Customer> Customers { get; set; } = null!; 
     public virtual DbSet<Transaction> Transactions { get; set; } = null!;  
     public virtual DbSet<AccountingEntry> AccountingEntries { get; set; } = null!;  
-
     public CuentasporcobrardbContext()
     {
     }

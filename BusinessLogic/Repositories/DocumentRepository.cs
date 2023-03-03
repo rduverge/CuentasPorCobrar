@@ -1,11 +1,9 @@
-﻿using BusinessLogic.Validation;
-using CuentasPorCobrar.Shared;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Collections.Concurrent; 
+using System.Collections.Concurrent;
 
 
-namespace API.Repositories;
+namespace CuentasPorCobrar.Shared;
 
 public class DocumentRepository: IDocumentRepository
 {

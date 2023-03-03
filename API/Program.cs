@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using static System.Console;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using API.Repositories;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
-using BusinessLogic.Validation;
+
 using FluentValidation.AspNetCore;
 using API.Middleware;
 using Microsoft.AspNetCore.Mvc;

@@ -1,9 +1,8 @@
-﻿using CuentasPorCobrar.Shared;
-using Microsoft.EntityFrameworkCore;
+﻿
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Concurrent;
 
-namespace API.Repositories;
+namespace CuentasPorCobrar.Shared;
 
 public class AccountingEntryRepository : IAccountingEntryRepository
 {
@@ -139,7 +138,9 @@ public class AccountingEntryRepository : IAccountingEntryRepository
 
 
     }
-    }
+
+   
+}
 
     
 

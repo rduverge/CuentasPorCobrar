@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CuentasPorCobrar.Shared;
-using API.Repositories;
+
 using FluentValidation.Results;
 using FluentValidation;
 using API.Middleware;

@@ -1,5 +1,5 @@
-﻿using CuentasPorCobrar.Shared;
-namespace API.Repositories;
+﻿
+namespace CuentasPorCobrar.Shared;
 
 public interface IAccountingEntryRepository
 {

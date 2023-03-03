@@ -1,5 +1,4 @@
-﻿using API.Repositories;
-using BusinessLogic.Validation;
+﻿
 using CuentasPorCobrar.Shared;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc.Formatters;

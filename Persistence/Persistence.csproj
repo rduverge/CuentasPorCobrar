@@ -1,23 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>CuentasPorCobrar.Persistence.Euren</PackageId>
-    <Version>2.0.0</Version>
-    <Authors>Euren Cuevas, Nestor Moscat</Authors>
-    <Company>Euren Cuevas, Nestor Moscat</Company>
-    <Product>Accounting System</Product>
-    <Description>This is the persistence of the accounting project I'm doing. </Description>
-    <RepositoryUrl>https://github.com/Lunext/CuentasPorCobrar</RepositoryUrl>
-   
-  </PropertyGroup>
-
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		
+	</PropertyGroup>
+ 
   <ItemGroup>
    
-    <PackageReference Include="CuentasPorCobrar.BusinessLogic.Euren" Version="2.0.0" />
+    
    
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -29,6 +21,11 @@
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.0" />
   </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Domain\Domain.csproj"/>
+	</ItemGroup>
+
 
 
  

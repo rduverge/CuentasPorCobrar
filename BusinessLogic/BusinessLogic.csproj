@@ -1,21 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>CuentasPorCobrar.BusinessLogic.Euren</PackageId>
-    <Version>2.0.0</Version>
-    <Authors>Euren Cuevas, Nestor Moscat</Authors>
-    <Company>Euren Cuevas, Nestor Moscat</Company>
-    <Product>CuentasPorCobrar.BusinessLogic</Product>
-    <Description>Project to have the business logic of an accountant project</Description>
-    <RepositoryUrl>https://github.com/Lunext/CuentasPorCobrar</RepositoryUrl>
+    
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.5.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
   </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Domain\Domain.csproj" />
+		<ProjectReference Include="..\Persistence\Persistence.csproj"/>
+	</ItemGroup>
 
 
 
