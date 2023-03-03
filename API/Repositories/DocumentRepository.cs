@@ -1,4 +1,6 @@
-﻿using CuentasPorCobrar.Shared;
+﻿using BusinessLogic.Validation;
+using CuentasPorCobrar.Shared;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Concurrent; 
 
@@ -16,10 +18,12 @@ public class DocumentRepository: IDocumentRepository
      * be cached due to their internal caching
      
      */
-    private CuentasporcobrardbContext db; 
+    private CuentasporcobrardbContext db;
+    private IValidator<Document> validator; 
 
-    public DocumentRepository(CuentasporcobrardbContext db)
+    public DocumentRepository(CuentasporcobrardbContext db, IValidator<Document> validator)
     {
+        this.validator=validator; 
         this.db=db;
 
         if(documentCache is null)
@@ -50,9 +54,12 @@ public class DocumentRepository: IDocumentRepository
 
     public async Task<Document?> CreateAsync(Document document)
     {
-        //Add to database using EF Core
+
+     
         EntityEntry<Document> added = await db.Documents.AddAsync(document);
-        int affected = await db.SaveChangesAsync(); 
+        int affected = await db.SaveChangesAsync();
+
+    
 
         if(affected == 1)
         {

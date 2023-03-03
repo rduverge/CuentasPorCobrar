@@ -5,8 +5,11 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using API.Repositories;
 using Microsoft.EntityFrameworkCore;
-using BusinessLogic.Validation;
 using FluentValidation;
+using BusinessLogic.Validation;
+using FluentValidation.AspNetCore;
+using API.Middleware;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +47,8 @@ builder.Services.AddControllers(options =>
     .AddXmlDataContractSerializerFormatters()
     .AddXmlSerializerFormatters();
 
+//.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<WeatherForecastValidator>());
+
 builder.Services.AddEndpointsApiExplorer(); 
 builder.Services.AddSwaggerGen(doc =>
 {
@@ -60,6 +65,12 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IAccountingEntryRepository, AccountingEntryRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
+builder.Services.AddScoped<IValidator<Document>, DocumentValidator>();
+
+//builder.Services.AddScoped<ValidationFilterAttribute>();
+
+//builder.Services.Configure<ApiBehaviorOptions>(options =>
+//options.SuppressModelStateInvalidFilter=true); 
 builder.Services.AddScoped<IValidator<Customer>, CustomerValidator>();
 builder.Services.AddScoped<IValidator<Transaction>, TransactionValidator>();
 
@@ -84,6 +95,7 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+
 
 
 
