@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using API.Repositories;
 using CuentasPorCobrar.Shared;
+using FluentValidation;
+using FluentValidation.Results;
+using API.Middleware;
 
 namespace API.Controllers;
 
@@ -9,12 +12,14 @@ namespace API.Controllers;
 [ApiController]
 public class DocumentsController : ControllerBase
 {
-    private readonly IDocumentRepository repo; 
+    private readonly IDocumentRepository repo;
+    private readonly IValidator<Document> validator; 
 
     //constructor injects repository registered in Program 
 
-    public DocumentsController(IDocumentRepository repo)
+    public DocumentsController(IDocumentRepository repo, IValidator<Document> validator)
     {
+        this.validator=validator;
         this.repo=repo; 
     }
 
@@ -47,14 +52,24 @@ public class DocumentsController : ControllerBase
     [ProducesResponseType(400)]
     public async Task<IActionResult> Create([FromBody] Document document)
     {
-        if (document is null) return BadRequest(); //400
 
-        Document? addedDoument = await repo.CreateAsync(document);
+        ValidationResult vadResult = await validator.ValidateAsync(document);
 
-        return addedDoument is null ? BadRequest("Repository failed to create Document.")
-            :CreatedAtRoute(routeName:nameof(GetDocument), 
-            routeValues: new {id= addedDoument.DocumentId},
-            value:addedDoument); 
+
+        if (document is null) return BadRequest();
+        if (!vadResult.IsValid)
+        {
+            vadResult.AddToModelState(ModelState);
+            return BadRequest(ModelState); 
+        }
+        
+
+        Document? addedDocument = await repo.CreateAsync(document);
+
+        return addedDocument is null ? BadRequest("Error to save document.")
+            : CreatedAtRoute(routeName: nameof(GetDocument),
+            routeValues: new { id = addedDocument.DocumentId },
+            value: addedDocument);
     }
 
     //PUT: api/documents/[id]
@@ -65,7 +80,30 @@ public class DocumentsController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, [FromBody] Document document)
     {
-        if(document is null || document.DocumentId !=id) return BadRequest();
+
+
+
+        
+
+
+
+
+        ValidationResult vadResult = await validator.ValidateAsync(document);
+
+
+        if (document is null||document.DocumentId !=id) return BadRequest();
+
+
+        if (!vadResult.IsValid)
+        {
+            vadResult.AddToModelState(ModelState);
+            return BadRequest(ModelState);
+        }
+        
+        
+        
+
+
 
 
 
