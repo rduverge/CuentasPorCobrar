@@ -21,7 +21,7 @@ public class Document
 
     
    
-    public string? LedgerAccount { get; set; }
+    public int LedgerAccount { get; set; }
 
 
     public States? State { get; set; }

@@ -25,7 +25,7 @@ public class AccountingEntry
 
     
     
-    public string? Account { get; set; }
+    public int Account { get; set; }
 
 
     public MovementTypes? MovementType { get; set; } 

@@ -26,6 +26,10 @@ public class AccountingEntriesValidator:AbstractValidator<AccountingEntry>
             .GreaterThan(0)
             .WithMessage("It cannot be negative")
             .NotEmpty()
+            .WithMessage("It cannot be empty");
+
+        RuleFor(a => a.Account)
+            .NotEmpty()
             .WithMessage("It cannot be empty"); 
 
        
