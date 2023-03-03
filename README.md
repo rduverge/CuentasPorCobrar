@@ -16,3 +16,6 @@ Registrado || Aprobado
 
 #
 Preguntar sobre Cuenta Contable
+
+#
+Mover carpeta Repository y el Fluent Validation Extensions hacia el BusinessLogic.
