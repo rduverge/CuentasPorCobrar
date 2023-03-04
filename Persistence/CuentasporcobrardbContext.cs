@@ -27,7 +27,8 @@ public partial class CuentasporcobrardbContext : DbContext
 
         modelBuilder.Entity<Transaction>()
             .HasOne(c => c.Customer)
-            .WithMany(t => t.Transactions);
+            .WithMany(t => t.Transactions)
+            .HasForeignKey(c=>c.CustomerId);
 
         modelBuilder.Entity<Transaction>()
             .HasOne(d => d.Document)
@@ -37,7 +38,13 @@ public partial class CuentasporcobrardbContext : DbContext
 
         modelBuilder.Entity<AccountingEntry>()
             .HasOne(c => c.Customer)
-            .WithMany(a => a.AccountingEntries); 
+            .WithMany(a => a.AccountingEntries)
+            .HasForeignKey(c=>c.CustomerId);
+
+     
+
+       
+
        
         OnModelCreatingPartial(modelBuilder);
 
