@@ -8,7 +8,8 @@ public class AccountingEntry
      
     
     [Key]
-    public int AccountingEntryId { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid AccountingEntryId { get; set; }
 
     
     public string? Description { get; set; }
@@ -17,7 +18,7 @@ public class AccountingEntry
  
 
 
-    public int CustomerId { get; set;}
+    public Guid CustomerId { get; set;}
     public virtual Customer? Customer { get; set; }
 
 

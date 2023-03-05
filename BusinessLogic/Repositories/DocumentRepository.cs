@@ -9,7 +9,7 @@ public class DocumentRepository: IDocumentRepository
 {
     //Use a static thread safe dictionary field to cache the customer 
 
-    private static ConcurrentDictionary<int, Document>? documentCache;
+    private static ConcurrentDictionary<Guid, Document>? documentCache;
 
 
     /*Use an instance of data context field because it should not
@@ -26,7 +26,7 @@ public class DocumentRepository: IDocumentRepository
 
         if(documentCache is null)
         {
-            documentCache=new ConcurrentDictionary <int, Document>(db.Documents.ToDictionary(d=>d.DocumentId)); 
+            documentCache=new ConcurrentDictionary <Guid, Document>(db.Documents.ToDictionary(d=>d.DocumentId)); 
         }
     }
     public Task<IEnumerable<Document>> RetrieveAllAsync()
@@ -38,7 +38,7 @@ public class DocumentRepository: IDocumentRepository
             : documentCache.Values);
     }
 
-    public Task<Document?>RetrieveAsync(int id)
+    public Task<Document?>RetrieveAsync(Guid id)
     {
         // for performance get from cache 
 
@@ -76,7 +76,7 @@ public class DocumentRepository: IDocumentRepository
     }
     
 
-    private Document UpdateCache(int id, Document document)
+    private Document UpdateCache(Guid id, Document document)
     {
         Document? old; 
         if(documentCache is not null)
@@ -91,7 +91,7 @@ public class DocumentRepository: IDocumentRepository
         }
         return null!;
     }
-    public async Task<Document?> UpdateAsync(int id, Document document)
+    public async Task<Document?> UpdateAsync(Guid id, Document document)
     {
         //update in database 
         db.Documents.Update(document);
@@ -107,7 +107,7 @@ public class DocumentRepository: IDocumentRepository
 
     }
 
-    public async Task<bool?> DeleteAsync(int id)
+    public async Task<bool?> DeleteAsync(Guid id)
     {
         //remove from database 
         Document? document = db.Documents.Find(id);

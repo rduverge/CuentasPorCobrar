@@ -34,7 +34,7 @@ public class CustomersController : ControllerBase
     [HttpGet("{id}", Name =nameof(GetCustomerByID))]
     [ProducesResponseType(200, Type = typeof(Customer))]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> GetCustomerByID(int id)
+    public async Task<IActionResult> GetCustomerByID(Guid id)
     {
         Customer? customer = await repo.RetrieveByIdAsync(id);
 
@@ -75,7 +75,7 @@ public class CustomersController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> Update(int id, [FromBody] Customer customer)
+    public async Task<IActionResult> Update(Guid id, [FromBody] Customer customer)
     {
         ValidationResult result = await _validator.ValidateAsync(customer);
 
@@ -100,7 +100,7 @@ public class CustomersController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         Customer? existing = await repo.RetrieveByIdAsync(id);
         if(existing is null) return NotFound();

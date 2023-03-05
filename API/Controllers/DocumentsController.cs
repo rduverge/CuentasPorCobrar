@@ -36,7 +36,7 @@ public class DocumentsController : ControllerBase
     [HttpGet("{id}", Name =nameof(GetDocument))] //named route
     [ProducesResponseType(200,Type=typeof(Document))]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> GetDocument(int id)
+    public async Task<IActionResult> GetDocument(Guid id)
     {
         Document? document = await repo.RetrieveAsync(id);
 
@@ -78,7 +78,7 @@ public class DocumentsController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> Update(int id, [FromBody] Document document)
+    public async Task<IActionResult> Update(Guid id, [FromBody] Document document)
     {
 
         ValidationResult vadResult = await validator.ValidateAsync(document);
@@ -103,7 +103,7 @@ public class DocumentsController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         Document? existing = await repo.RetrieveAsync(id);
         if (existing is null) return NotFound(); //404 Resource Not Found

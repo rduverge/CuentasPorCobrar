@@ -6,10 +6,10 @@ public interface IAccountingEntryRepository
  
     Task<AccountingEntry?> CreateAsync(AccountingEntry accountingEntry);
     Task<IEnumerable<AccountingEntry>> RetrieveAllAsync();
-    Task<AccountingEntry?> RetrieveAsync(int id);
-    Task<AccountingEntry?> UpdateAsync(int id, AccountingEntry accountingEntry);
+    Task<AccountingEntry?> RetrieveAsync(Guid id);
+    Task<AccountingEntry?> UpdateAsync(Guid id, AccountingEntry accountingEntry);
    
-    Task<bool?> DeleteAsync(int id); 
+    Task<bool?> DeleteAsync(Guid id); 
 
 }
 

@@ -5,7 +5,7 @@ namespace CuentasPorCobrar.Shared;
 
 public class CustomerRepository : ICustomerRepository
 {
-    private static ConcurrentDictionary<int, Customer>? customerCache;
+    private static ConcurrentDictionary<Guid, Customer>? customerCache;
 
     private CuentasporcobrardbContext context;
 
@@ -15,7 +15,7 @@ public class CustomerRepository : ICustomerRepository
 
         if(customerCache is null)
         {
-            customerCache = new ConcurrentDictionary<int, Customer>(context.Customers.ToDictionary(c => c.CustomerId));
+            customerCache = new ConcurrentDictionary<Guid, Customer>(context.Customers.ToDictionary(c => c.CustomerId));
         }
     }
 
@@ -27,7 +27,7 @@ public class CustomerRepository : ICustomerRepository
             : customerCache.Values);
     }
 
-    public Task<Customer?> RetrieveByIdAsync(int id)
+    public Task<Customer?> RetrieveByIdAsync(Guid id)
     {
         if (customerCache is null) return null!;
 
@@ -35,7 +35,7 @@ public class CustomerRepository : ICustomerRepository
         return Task.FromResult(customer);
     }
 
-    public Customer UpdateCache(int id, Customer customer)
+    public Customer UpdateCache(Guid id, Customer customer)
     {
         Customer? old;
         if (customerCache is not null)
@@ -68,7 +68,7 @@ public class CustomerRepository : ICustomerRepository
         }
     }
 
-    public async Task<Customer?> UpdateAsync(int id, Customer customer)
+    public async Task<Customer?> UpdateAsync(Guid id, Customer customer)
     {
         context.Customers.Update(customer);
         int affected = await context.SaveChangesAsync();
@@ -80,7 +80,7 @@ public class CustomerRepository : ICustomerRepository
         return null;
     }
 
-    public async Task<bool?> DeleteAsync(int id)
+    public async Task<bool?> DeleteAsync(Guid id)
     {
         Customer? customer = context.Customers.Find(id);
         if (customer is null) return null;

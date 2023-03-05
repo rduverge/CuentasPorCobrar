@@ -12,7 +12,8 @@ public class Document
         Transactions=new HashSet<Transaction>();
     }
     [Key]
-    public int DocumentId { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid DocumentId { get; set; }
 
 
    

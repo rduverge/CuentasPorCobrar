@@ -8,7 +8,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
 {
     //Use a static thread safe dictionary field to cache the customer 
 
-    private static ConcurrentDictionary<int, AccountingEntry>? accountingCache;
+    private static ConcurrentDictionary<Guid, AccountingEntry>? accountingCache;
 
 
     /*Use an instance of data context field because it should not
@@ -24,7 +24,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
 
         if(accountingCache is null)
         {
-            accountingCache= new ConcurrentDictionary<int, AccountingEntry>(db.AccountingEntries.ToDictionary(d => d.AccountingEntryId)); 
+            accountingCache= new ConcurrentDictionary<Guid, AccountingEntry>(db.AccountingEntries.ToDictionary(d => d.AccountingEntryId)); 
 
         }
     }
@@ -42,7 +42,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
             : accountingCache.Values); 
     }
 
-    public  Task<AccountingEntry?> RetrieveAsync(int id)
+    public  Task<AccountingEntry?> RetrieveAsync(Guid id)
     {
 
 
@@ -80,7 +80,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
         }
     }
 
-    private AccountingEntry UpdateCache(int id, AccountingEntry accountingEntry)
+    private AccountingEntry UpdateCache(Guid id, AccountingEntry accountingEntry)
     {
         AccountingEntry? old; 
 
@@ -97,7 +97,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
         }
         return null!; 
     }
-    public async Task<AccountingEntry?> UpdateAsync(int id, AccountingEntry accountingEntry )
+    public async Task<AccountingEntry?> UpdateAsync(Guid id, AccountingEntry accountingEntry )
     {
         //update in database
         db.AccountingEntries.Update(accountingEntry);
@@ -113,7 +113,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
     }
 
 
-    public async Task<bool?> DeleteAsync(int id)
+    public async Task<bool?> DeleteAsync(Guid id)
     {
         //remove from database 
         AccountingEntry? accountingEntry = db.AccountingEntries.Find(id);

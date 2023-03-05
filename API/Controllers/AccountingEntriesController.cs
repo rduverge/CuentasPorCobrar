@@ -37,7 +37,7 @@ public class AccountingEntriesController : ControllerBase
     [HttpGet("{id}", Name = nameof(GetAccountingEntry))]
     [ProducesResponseType(200, Type = typeof(AccountingEntry))]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> GetAccountingEntry(int id)
+    public async Task<IActionResult> GetAccountingEntry(Guid id)
     {
         AccountingEntry? accountingEntry = await repo.RetrieveAsync(id);
 
@@ -82,7 +82,7 @@ public class AccountingEntriesController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> Update(int id, [FromBody] AccountingEntry accountingEntry)
+    public async Task<IActionResult> Update(Guid id, [FromBody] AccountingEntry accountingEntry)
     {
         ValidationResult vadResult = await validator.ValidateAsync(accountingEntry);
 
@@ -106,7 +106,7 @@ public class AccountingEntriesController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         AccountingEntry? existing = await repo.RetrieveAsync(id);
         if (existing is null) return NotFound();
