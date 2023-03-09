@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Concurrent;
 
@@ -8,7 +9,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
 {
     //Use a static thread safe dictionary field to cache the customer 
 
-    private static ConcurrentDictionary<Guid, AccountingEntry>? accountingCache;
+    private static ConcurrentDictionary<int, AccountingEntry>? accountingCache;
 
 
     /*Use an instance of data context field because it should not
@@ -24,7 +25,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
 
         if(accountingCache is null)
         {
-            accountingCache= new ConcurrentDictionary<Guid, AccountingEntry>(db.AccountingEntries.ToDictionary(d => d.AccountingEntryId)); 
+            accountingCache= new ConcurrentDictionary<int, AccountingEntry>(db.AccountingEntries.Include(x=>x.Customer).ToDictionary(d => d.AccountingEntryId)); 
 
         }
     }
@@ -35,18 +36,19 @@ public class AccountingEntryRepository : IAccountingEntryRepository
 
         //for performance get from cache 
 
+        
 
         return Task.FromResult
             (accountingCache is null ?
             Enumerable.Empty<AccountingEntry>()
             : accountingCache.Values); 
+
+        
+
     }
 
-    public  Task<AccountingEntry?> RetrieveAsync(Guid id)
+    public  Task<AccountingEntry?> RetrieveAsync(int id)
     {
-
-
-    
 
 
         if (accountingCache is null) return null!;
@@ -80,7 +82,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
         }
     }
 
-    private AccountingEntry UpdateCache(Guid id, AccountingEntry accountingEntry)
+    private AccountingEntry UpdateCache(int id, AccountingEntry accountingEntry)
     {
         AccountingEntry? old; 
 
@@ -97,7 +99,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
         }
         return null!; 
     }
-    public async Task<AccountingEntry?> UpdateAsync(Guid id, AccountingEntry accountingEntry )
+    public async Task<AccountingEntry?> UpdateAsync(int id, AccountingEntry accountingEntry )
     {
         //update in database
         db.AccountingEntries.Update(accountingEntry);
@@ -113,7 +115,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
     }
 
 
-    public async Task<bool?> DeleteAsync(Guid id)
+    public async Task<bool?> DeleteAsync(int id)
     {
         //remove from database 
         AccountingEntry? accountingEntry = db.AccountingEntries.Find(id);

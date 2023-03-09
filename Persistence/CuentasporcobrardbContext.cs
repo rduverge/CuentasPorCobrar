@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace CuentasPorCobrar.Shared;
 
@@ -34,18 +35,26 @@ public partial class CuentasporcobrardbContext : DbContext
             .HasOne(d => d.Document)
             .WithMany(t => t.Transactions);
 
-
-
-        modelBuilder.Entity<AccountingEntry>()
-            .HasOne(c => c.Customer)
-            .WithMany(a => a.AccountingEntries)
-            .HasForeignKey(c=>c.CustomerId);
-
-     
-
        
+       // modelBuilder.Entity<AccountingEntry>()
+       //     .Property(x=>x.Customer)
+       //     .HasConversion(
+       //    x => JsonSerializer.Serialize(x,(JsonSerializerOptions)null),
+       //    x => JsonSerializer.Deserialize<Customer>(x,(JsonSerializerOptions)null)
+       //);
 
-       
+
+
+        //modelBuilder.Entity<AccountingEntry>()
+        //    .HasOne(c => c.Customer)
+        //    .WithMany(a => a.AccountingEntries)
+        //    .HasForeignKey(c=>c.CustomerId);
+
+
+
+
+
+
         OnModelCreatingPartial(modelBuilder);
 
     }

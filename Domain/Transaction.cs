@@ -10,11 +10,11 @@ public class Transaction
    
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid TransactionId { get; set; }
+    public int TransactionId { get; set; }
     
     public MovementTypes? MovementType { get; set; }
 
-    public Guid DocumentId { get; set; }
+    public int? DocumentId { get; set; }
     public virtual Document? Document { get; set; } 
     
     
@@ -22,14 +22,13 @@ public class Transaction
     public Guid? DocumentNumber { get; set; }
 
     
-    [Column(TypeName = "timestamp without time zone")]
     public DateTime TransactionDate { get; set; }
 
 
-    public Guid CustomerId { get; set; }
+    public int? CustomerId { get; set; }
     public virtual Customer? Customer { get; set; }
 
    
-    [Column(TypeName ="money")]
+    
     public decimal Amount { get; set; }
 }

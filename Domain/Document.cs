@@ -13,7 +13,7 @@ public class Document
     }
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid DocumentId { get; set; }
+    public int DocumentId { get; set; }
 
 
    

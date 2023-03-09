@@ -24,21 +24,23 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("CuentasPorCobrar.Shared.AccountingEntry", b =>
                 {
-                    b.Property<Guid>("AccountingEntryId")
+                    b.Property<int>("AccountingEntryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AccountingEntryId"));
 
                     b.Property<int>("Account")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("AccountEntryAmount")
-                        .HasColumnType("money");
+                        .HasColumnType("numeric");
 
                     b.Property<DateTime>("AccountEntryDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -58,9 +60,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("CuentasPorCobrar.Shared.Customer", b =>
                 {
-                    b.Property<Guid>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CustomerId"));
 
                     b.Property<decimal>("CreditLimit")
                         .HasColumnType("money");
@@ -81,9 +85,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("CuentasPorCobrar.Shared.Document", b =>
                 {
-                    b.Property<Guid>("DocumentId")
+                    b.Property<int>("DocumentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DocumentId"));
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -101,18 +107,20 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("CuentasPorCobrar.Shared.Transaction", b =>
                 {
-                    b.Property<Guid>("TransactionId")
+                    b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TransactionId"));
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("money");
+                        .HasColumnType("numeric");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("DocumentId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("DocumentId")
+                        .HasColumnType("integer");
 
                     b.Property<Guid?>("DocumentNumber")
                         .HasColumnType("uuid");
@@ -121,7 +129,7 @@ namespace Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("TransactionId");
 
@@ -136,9 +144,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
                         .WithMany("AccountingEntries")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.Navigation("Customer");
                 });
@@ -147,15 +153,11 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
                         .WithMany("Transactions")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("CuentasPorCobrar.Shared.Document", "Document")
                         .WithMany("Transactions")
-                        .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DocumentId");
 
                     b.Navigation("Customer");
 

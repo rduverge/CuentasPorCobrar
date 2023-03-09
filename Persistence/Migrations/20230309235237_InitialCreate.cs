@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -15,7 +16,8 @@ namespace Persistence.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CustomerId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Identification = table.Column<string>(type: "text", nullable: true),
                     CreditLimit = table.Column<decimal>(type: "money", nullable: false),
@@ -30,7 +32,8 @@ namespace Persistence.Migrations
                 name: "Documents",
                 columns: table => new
                 {
-                    DocumentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DocumentId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Description = table.Column<string>(type: "text", nullable: true),
                     LedgerAccount = table.Column<int>(type: "integer", nullable: false),
                     State = table.Column<int>(type: "integer", nullable: true)
@@ -44,13 +47,14 @@ namespace Persistence.Migrations
                 name: "AccountingEntries",
                 columns: table => new
                 {
-                    AccountingEntryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AccountingEntryId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CustomerId = table.Column<int>(type: "integer", nullable: true),
                     Account = table.Column<int>(type: "integer", nullable: false),
                     MovementType = table.Column<int>(type: "integer", nullable: true),
-                    AccountEntryDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    AccountEntryAmount = table.Column<decimal>(type: "money", nullable: false),
+                    AccountEntryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    AccountEntryAmount = table.Column<decimal>(type: "numeric", nullable: false),
                     State = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -60,21 +64,21 @@ namespace Persistence.Migrations
                         name: "FK_AccountingEntries_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CustomerId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
-                    TransactionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TransactionId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MovementType = table.Column<int>(type: "integer", nullable: true),
-                    DocumentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DocumentId = table.Column<int>(type: "integer", nullable: true),
                     DocumentNumber = table.Column<Guid>(type: "uuid", nullable: true),
-                    TransactionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Amount = table.Column<decimal>(type: "money", nullable: false)
+                    TransactionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CustomerId = table.Column<int>(type: "integer", nullable: true),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,14 +87,12 @@ namespace Persistence.Migrations
                         name: "FK_Transactions_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CustomerId");
                     table.ForeignKey(
                         name: "FK_Transactions_Documents_DocumentId",
                         column: x => x.DocumentId,
                         principalTable: "Documents",
-                        principalColumn: "DocumentId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "DocumentId");
                 });
 
             migrationBuilder.CreateIndex(

@@ -39,23 +39,27 @@ app.UseHttpsRedirection();
 
 builder.WebHost.UseUrls("https://localhost:5002/");
 
-app.UseCors(configurePolicy: options =>
-{
-    options.WithMethods("GET", "POST", "PUT", "DELETE");
-    options.WithOrigins(
-        "https://localhost:5001"); //Allow requests from the MVC client
-});
+//app.UseCors(configurePolicy: options =>
+//{
+//    options.WithMethods("GET", "POST", "PUT", "DELETE");
+//    options.WithOrigins(
+//        "https://localhost:5001"); //Allow requests from the MVC client
+//});
 
 //app.UseMiddleware<SecurityHeaders>();
 
 
 app.UseAuthorization();
+app.UseCors("CorsPolicy");
+
+
 
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 
 var services = scope.ServiceProvider;
+
 
 
 try

@@ -15,7 +15,7 @@ public class Customer
     }
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid CustomerId { get; set; }
+    public int CustomerId { get; set; }
 
     
    

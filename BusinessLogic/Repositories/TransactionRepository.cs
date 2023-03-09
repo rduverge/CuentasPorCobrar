@@ -5,7 +5,7 @@ namespace CuentasPorCobrar.Shared;
 
 public class TransactionRepository : ITransactionRepository
 {
-    private static ConcurrentDictionary<Guid, Transaction>? transactionCache;
+    private static ConcurrentDictionary<int, Transaction>? transactionCache;
     private CuentasporcobrardbContext context;
 
     public TransactionRepository(CuentasporcobrardbContext context)
@@ -13,7 +13,7 @@ public class TransactionRepository : ITransactionRepository
         this.context = context;
         if(transactionCache is null)
         {
-            transactionCache = new ConcurrentDictionary<Guid, Transaction>(context.Transactions.ToDictionary(t => t.TransactionId));
+            transactionCache = new ConcurrentDictionary<int, Transaction>(context.Transactions.ToDictionary(t => t.TransactionId));
         }
     }
 
@@ -23,14 +23,14 @@ public class TransactionRepository : ITransactionRepository
             (transactionCache is null ? Enumerable.Empty<Transaction>()
             : transactionCache.Values);
     }
-    public Task<Transaction?> RetrieveByIdAsync(Guid id)
+    public Task<Transaction?> RetrieveByIdAsync(int id)
     {
         if (transactionCache is null) return null!; 
         transactionCache.TryGetValue(id, out Transaction? transaction);
         return Task.FromResult(transaction);
     }
 
-    private Transaction UpdateCache(Guid id, Transaction transaction)
+    private Transaction UpdateCache(int id, Transaction transaction)
     {
         Transaction? old; 
         if(transactionCache is not null)
@@ -63,7 +63,7 @@ public class TransactionRepository : ITransactionRepository
         }
     }
 
-    public async Task<Transaction?> UpdateAsync(Guid id, Transaction transaction)
+    public async Task<Transaction?> UpdateAsync(int id, Transaction transaction)
     {
         context.Transactions.Update(transaction);
         int affected = await context.SaveChangesAsync(); 
@@ -74,7 +74,7 @@ public class TransactionRepository : ITransactionRepository
         return null; 
     }
 
-    public async Task<bool?> DeleteAsync(Guid id)
+    public async Task<bool?> DeleteAsync(int id)
     {
         Transaction? transaction = context.Transactions.Find(id);
         if (transaction is null) return null; 

@@ -32,7 +32,7 @@ public class TransactionController : ControllerBase
     [HttpGet("{id}", Name=nameof(GetTransactionByID))]
     [ProducesResponseType(200, Type=typeof(Transaction))]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> GetTransactionByID(Guid id)
+    public async Task<IActionResult> GetTransactionByID(int id)
     {
         Transaction? transaction = await repo.RetrieveByIdAsync(id);
         return transaction is null ? NotFound() : Ok(transaction);
@@ -68,7 +68,7 @@ public class TransactionController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> Update(Guid id, [FromBody] Transaction transaction)
+    public async Task<IActionResult> Update(int id, [FromBody] Transaction transaction)
     {
         ValidationResult result = await validator.ValidateAsync(transaction);
         
@@ -93,7 +93,7 @@ public class TransactionController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete(int id)
     {
         Transaction? existing = await repo.RetrieveByIdAsync(id);
         if (existing is null) return NotFound();

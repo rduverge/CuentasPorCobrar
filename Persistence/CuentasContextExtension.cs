@@ -21,6 +21,7 @@ public static class CuentasContextExtension
         string connectionString= "Host=localhost;Port=5432;Database=cuentasporcobrardb;Username=postgres;Password=Euren002")
     {
         services.AddDbContext<CuentasporcobrardbContext>(options => {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             options.UseNpgsql(connectionString);
           //  options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });

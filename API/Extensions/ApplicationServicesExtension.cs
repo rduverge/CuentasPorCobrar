@@ -2,7 +2,9 @@
 using CuentasPorCobrar.Shared;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using System.Text.Json.Serialization;
 using static System.Console;
+
 
 namespace API.Extensions;
 
@@ -11,9 +13,22 @@ public static class ApplicationServicesExtension
   public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
         // Add services to the container.
+        services.AddCors(opt => {
+            opt.AddPolicy("CorsPolicy", policy => {
+                policy.AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+                .WithOrigins("http://127.0.0.1:5173");
+            });
+        });
 
-        services.AddCors(); 
-        services.AddControllers();
+        services.AddControllers().
+            AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+               
+            });
+            
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         //builder.Services.AddEndpointsApiExplorer();
        // services.AddSwaggerGen();
