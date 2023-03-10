@@ -4,9 +4,9 @@ namespace CuentasPorCobrar.Shared;
 public enum States
 {
 
-    Pending,
-    Approved,
-    Denied
+    Pendiente,
+    Aprobado,
+    Rechazado
 
 }
 

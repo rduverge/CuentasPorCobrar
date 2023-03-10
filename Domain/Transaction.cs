@@ -7,6 +7,8 @@ namespace CuentasPorCobrar.Shared;
 
 public class Transaction 
 {
+
+   
    
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,10 +17,11 @@ public class Transaction
     public MovementTypes? MovementType { get; set; }
 
     public int? DocumentId { get; set; }
-    public virtual Document? Document { get; set; } 
-    
-    
-    
+    public virtual Document? Document { get; set; }
+
+
+
+
     public Guid? DocumentNumber { get; set; }
 
     
@@ -31,4 +34,6 @@ public class Transaction
    
     
     public decimal Amount { get; set; }
+
+    
 }

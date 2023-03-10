@@ -70,7 +70,7 @@ public class TransactionRepository : ITransactionRepository
         if(affected == 1) 
         { 
             if(transactionCache is null) return transaction;
-
+             
             await GetCustomers();
             await GetDocuments(); 
 
@@ -112,4 +112,6 @@ public class TransactionRepository : ITransactionRepository
             return null;
         }
     }
+
+   
 }

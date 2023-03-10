@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CuentasporcobrardbContext))]
-    [Migration("20230309235237_InitialCreate")]
+    [Migration("20230310145015_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
