@@ -28,10 +28,13 @@ public static class ApplicationServicesExtension
                 o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                
             });
-            
+        services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+     );
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         //builder.Services.AddEndpointsApiExplorer();
-       // services.AddSwaggerGen();
+        // services.AddSwaggerGen();
         services.AddCuentasContext();
 
         services.AddControllers(options =>

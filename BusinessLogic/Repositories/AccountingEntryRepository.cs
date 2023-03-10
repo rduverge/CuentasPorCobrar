@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Concurrent;
@@ -73,13 +74,22 @@ public class AccountingEntryRepository : IAccountingEntryRepository
             if (accountingCache is null) return accountingEntry;
 
             //if the accountingEntry is new, add it to cache
-
+            await GetCustomers();
             return accountingCache.AddOrUpdate(accountingEntry.AccountingEntryId, accountingEntry, UpdateCache);
+             
         }
         else
         {
             return null; 
         }
+
+    }
+
+    public async Task<Task<List<Customer>>> GetCustomers()
+    {
+        var customers =await db.Customers.ToListAsync();
+        return Task.FromResult(customers); 
+
     }
 
     private AccountingEntry UpdateCache(int id, AccountingEntry accountingEntry)
@@ -102,6 +112,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
     public async Task<AccountingEntry?> UpdateAsync(int id, AccountingEntry accountingEntry )
     {
         //update in database
+        
         db.AccountingEntries.Update(accountingEntry);
 
         int affected = await db.SaveChangesAsync(); 
@@ -109,6 +120,7 @@ public class AccountingEntryRepository : IAccountingEntryRepository
         if(affected==1)
         {
             //update in cache 
+            await GetCustomers();
             return UpdateCache(id, accountingEntry); 
         }
         return null; 

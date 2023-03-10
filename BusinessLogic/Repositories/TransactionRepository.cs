@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Concurrent;
 
 namespace CuentasPorCobrar.Shared;
@@ -30,6 +31,20 @@ public class TransactionRepository : ITransactionRepository
         return Task.FromResult(transaction);
     }
 
+    public async Task<Task<List<Customer>>> GetCustomers()
+    {
+        var customers = await context.Customers.ToListAsync();
+        return Task.FromResult(customers);
+
+    }
+    public async Task<Task<List<Document>>> GetDocuments()
+    {
+        var documents = await context.Documents.ToListAsync();
+        return Task.FromResult(documents);
+
+    }
+
+
     private Transaction UpdateCache(int id, Transaction transaction)
     {
         Transaction? old; 
@@ -39,6 +54,7 @@ public class TransactionRepository : ITransactionRepository
             {
                 if(transactionCache.TryUpdate(id, transaction, old))
                 {
+                    
                     return transaction;
                 }
             }
@@ -55,6 +71,9 @@ public class TransactionRepository : ITransactionRepository
         { 
             if(transactionCache is null) return transaction;
 
+            await GetCustomers();
+            await GetDocuments(); 
+
             return transactionCache.AddOrUpdate(transaction.TransactionId, transaction, UpdateCache);
         }
         else
@@ -68,7 +87,9 @@ public class TransactionRepository : ITransactionRepository
         context.Transactions.Update(transaction);
         int affected = await context.SaveChangesAsync(); 
         if(affected == 1) 
-        { 
+        {
+            await GetCustomers();
+            await GetDocuments();
             return UpdateCache(id, transaction);
         }
         return null; 
