@@ -12,26 +12,52 @@ public static class ApplicationServicesExtension
 {
   public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
-        // Add services to the container.
-        services.AddCors(opt => {
-            opt.AddPolicy("CorsPolicy", policy => {
-                policy.AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials()
-                .WithOrigins("http://127.0.0.1:5173");
-            });
-        });
 
-        services.AddControllers().
+        services.AddControllers(options =>
+        {
+            WriteLine("Default ouput formatters:");
+            //foreach (IOutputFormatter formatter in options.OutputFormatters)
+            //{
+            //    OutputFormatter? mediaFormatter = formatter as OutputFormatter;
+            //    if (mediaFormatter is null)
+            //    {
+            //        WriteLine($" {formatter.GetType().Name}");
+            //    }
+            //    else //OutputFormatter class has SupportedMediaTypes
+            //    {
+            //        WriteLine(" {0}, Media types: {1}",
+            //            mediaFormatter.GetType().Name,
+            //            string.Join(", ",
+            //            mediaFormatter.SupportedMediaTypes));
+
+            //    }
+            //}
+
+        }).
             AddJsonOptions(o =>
             {
                 o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                
+
             }).AddNewtonsoftJson(options =>
        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-       
 
-    ); 
+
+    );
+        // Add services to the container.
+        services.AddCors(opt => {
+            opt.AddPolicy("CorsPolicy", policy => {
+                policy
+                 .WithOrigins("http://localhost:5173").
+                 AllowAnyHeader()
+                .AllowAnyMethod();
+               // .AllowCredentials();
+               
+
+       
+            });
+        });
+
+        
        
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -39,28 +65,27 @@ public static class ApplicationServicesExtension
         // services.AddSwaggerGen();
         services.AddCuentasContext();
 
-        services.AddControllers(options =>
-        {
-            WriteLine("Default ouput formatters:");
-            foreach (IOutputFormatter formatter in options.OutputFormatters)
-            {
-                OutputFormatter? mediaFormatter = formatter as OutputFormatter;
-                if (mediaFormatter is null)
-                {
-                    WriteLine($" {formatter.GetType().Name}");
-                }
-                else //OutputFormatter class has SupportedMediaTypes
-                {
-                    WriteLine(" {0}, Media types: {1}",
-                        mediaFormatter.GetType().Name,
-                        string.Join(", ",
-                        mediaFormatter.SupportedMediaTypes));
+        //services.AddControllers(options =>
+        //{
+        //    WriteLine("Default ouput formatters:");
+        //    foreach (IOutputFormatter formatter in options.OutputFormatters)
+        //    {
+        //        OutputFormatter? mediaFormatter = formatter as OutputFormatter;
+        //        if (mediaFormatter is null)
+        //        {
+        //            WriteLine($" {formatter.GetType().Name}");
+        //        }
+        //        else //OutputFormatter class has SupportedMediaTypes
+        //        {
+        //            WriteLine(" {0}, Media types: {1}",
+        //                mediaFormatter.GetType().Name,
+        //                string.Join(", ",
+        //                mediaFormatter.SupportedMediaTypes));
 
-                }
-            }
-        })
-            .AddXmlDataContractSerializerFormatters()
-            .AddXmlSerializerFormatters();
+        //        }
+        //    }
+        //});
+            
 
         //.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<WeatherForecastValidator>());
 

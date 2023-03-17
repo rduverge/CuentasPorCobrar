@@ -78,11 +78,17 @@ namespace Persistence.Migrations
                     DocumentNumber = table.Column<Guid>(type: "uuid", nullable: true),
                     TransactionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CustomerId = table.Column<int>(type: "integer", nullable: true),
-                    Amount = table.Column<decimal>(type: "numeric", nullable: false)
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    AccountingEntryId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.TransactionId);
+                    table.ForeignKey(
+                        name: "FK_Transactions_AccountingEntries_AccountingEntryId",
+                        column: x => x.AccountingEntryId,
+                        principalTable: "AccountingEntries",
+                        principalColumn: "AccountingEntryId");
                     table.ForeignKey(
                         name: "FK_Transactions_Customers_CustomerId",
                         column: x => x.CustomerId,
@@ -101,6 +107,11 @@ namespace Persistence.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Transactions_AccountingEntryId",
+                table: "Transactions",
+                column: "AccountingEntryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_CustomerId",
                 table: "Transactions",
                 column: "CustomerId");
@@ -115,16 +126,16 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccountingEntries");
-
-            migrationBuilder.DropTable(
                 name: "Transactions");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "AccountingEntries");
 
             migrationBuilder.DropTable(
                 name: "Documents");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
         }
     }
 }

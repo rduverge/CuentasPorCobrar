@@ -48,9 +48,9 @@ builder.WebHost.UseUrls("https://localhost:5002/");
 
 //app.UseMiddleware<SecurityHeaders>();
 
-
-app.UseAuthorization();
 app.UseCors("CorsPolicy");
+app.UseAuthorization();
+
 
 
 

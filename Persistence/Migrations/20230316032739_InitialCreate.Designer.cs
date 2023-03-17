@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CuentasporcobrardbContext))]
-    [Migration("20230310174639_InitialCreate")]
+    [Migration("20230316032739_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -116,6 +116,9 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TransactionId"));
 
+                    b.Property<int?>("AccountingEntryId")
+                        .HasColumnType("integer");
+
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
@@ -136,6 +139,8 @@ namespace Persistence.Migrations
 
                     b.HasKey("TransactionId");
 
+                    b.HasIndex("AccountingEntryId");
+
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("DocumentId");
@@ -154,6 +159,10 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("CuentasPorCobrar.Shared.Transaction", b =>
                 {
+                    b.HasOne("CuentasPorCobrar.Shared.AccountingEntry", "AccountingEntry")
+                        .WithMany()
+                        .HasForeignKey("AccountingEntryId");
+
                     b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
                         .WithMany("Transactions")
                         .HasForeignKey("CustomerId");
@@ -161,6 +170,8 @@ namespace Persistence.Migrations
                     b.HasOne("CuentasPorCobrar.Shared.Document", "Document")
                         .WithMany("Transactions")
                         .HasForeignKey("DocumentId");
+
+                    b.Navigation("AccountingEntry");
 
                     b.Navigation("Customer");
 
